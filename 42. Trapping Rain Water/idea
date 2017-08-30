@@ -1,6 +1,37 @@
 1.不考虑复杂度：
   对于每个点，左找做大值，右找最大值，其收益等于max(0,min(左，右)-自高度)；
   其时间复杂度为O(n^2);
-
+  
+  实现代码：
+  public int trap(int[] height) {
+        int length = height.length;
+        int water_counter=0;
+        //iterator 
+        for(int i=0;i<length;i++){
+            //max height of left
+            int max_left=0;
+            for(int j=0;j<i;j++){
+                if(height[j]>max_left){
+                    max_left=height[j];
+                }
+            }
+            
+            //max height of right
+            int max_right=0;
+            for(int j=i;j<length;j++){
+                if(height[j]>max_right){
+                    max_right=height[j];
+                }
+            }
+            
+            //wather counter
+            water_counter+=Math.max(0,Math.min(max_left,max_right)-height[i]);    
+        }
+        return water_counter;
+    }
+    
+    结论：
+      测试用例超时
+      
 2.二分思想：
   每一个点能存储的水量是其所处左右结点最高值的最低值(木桶)；
